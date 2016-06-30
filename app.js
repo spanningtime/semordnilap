@@ -1,16 +1,38 @@
+var backwards = '';
+var word = '';
 
-// var isSem = function() {
-//   for (var x = 0; x < )
-// }
+var startXhr2 = function() {
+  var $xhr2 = $.getJSON('https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20160629T225043Z.cb66c2d8258eab54.4400d700965711edbcfcccc3d1f65154341b935e&lang=en-en&text=' + backwards)
+  $xhr2.done(function(data2) {
+    if (data2.def.length === 0) {
+      Materialize.toast(`${word} spelled backwards is ${backwards}. That doesn't make any sense.`, 4000);
+    }
+    else {
+      Materialize.toast(`YES! ${word} spelled backwards is ${backwards}! It's a semordnilap!`, 4000);
+    }
+  })
+}
 
-
-$('a').click(function() {
-  const $word = $('#word').val();
-  var $xhr = $.getJSON('https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20160629T225043Z.cb66c2d8258eab54.4400d700965711edbcfcccc3d1f65154341b935e&lang=en-en&text=' + $word)
+var startXhr = function() {
+  const $input = $('#input').val();
+  var $xhr = $.getJSON('https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20160629T225043Z.cb66c2d8258eab54.4400d700965711edbcfcccc3d1f65154341b935e&lang=en-en&text=' + $input)
   $xhr.done(function(data) {
-    if (data.def.length === 0) {
+    if (backwards !== '') {
+      backwards = '';
+    }
+    console.log(data);
+    if (data.def[0] === undefined) {
+      Materialize.toast(`${$input} isn't in the dictionary. Try another one.`, 4000);
       return;
     }
-    console.log(data.def[0].text);
+    word = data.def[0].text;
+    for (var x = word.length -1; x >= 0; x--) {
+      backwards += word[x];
+    }
+    startXhr2();
   })
+};
+
+$('a').click(function() {
+  startXhr();
 });
