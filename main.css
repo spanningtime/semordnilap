@@ -1,0 +1,42 @@
+input[type=text] {
+  height: 6rem;
+  font-size: 5rem;
+  color: #a087b2;
+  border-bottom: none;
+}
+
+input[type=text].valid,
+input[type=text].focus.valid,
+input[type=text]:focus:not([readonly]) {
+  border-bottom: white;
+  box-shadow: 0 0px;
+}
+
+#input {
+  text-transform: uppercase;
+}
+
+.btn {
+  background-color: black;
+}
+
+.btn:hover {
+  background-color: #a087b2
+}
+
+h1 {
+  font-size: 7rem;
+}
+
+h2 {
+  line-height: 10%
+}
+
+p {
+  font-size: 20px;
+}
+
+.toast {
+  height: 100px;
+  font-size: 2rem;
+}
